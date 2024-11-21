@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const multer = require('multer')
 const app = express()
+const path = require('path')
 require('dotenv').config()
 
 app.use(cors())
@@ -11,6 +12,18 @@ const upload = multer({
     storage: multer.memoryStorage(),
     limits: { fileSize: 5 * 1024 * 1024 }
 })
+
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
+console.log(path.join(__dirname, 'dist'))
+
+// Set up a default route to serve index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
+
 
 app.get('/bfhl', (req, res) => {
     res.json({ "operation_code": 1 })
