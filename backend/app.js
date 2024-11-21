@@ -1,9 +1,19 @@
-const express = require('express')
-const cors = require('cors')
-const multer = require('multer')
+const cors = require('cors');
+const dotenv = require('dotenv');
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const { fileURLToPath } = require('url');
 const app = express()
-const path = require('path')
-require('dotenv').config()
+
+// const filename = fileURLToPath(import.meta.url);
+// const dirname = path.dirname(filename);
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+dotenv.config()
 
 app.use(cors())
 app.use(express.json())
@@ -13,15 +23,6 @@ const upload = multer({
     limits: { fileSize: 5 * 1024 * 1024 }
 })
 
-
-app.use(express.static(path.join(__dirname, 'dist')));
-
-console.log(path.join(__dirname, 'dist'))
-
-// Set up a default route to serve index.html
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
 
 
 
@@ -78,4 +79,13 @@ function isPrime(num) {
         if (num % i === 0 || num % (i + 2) === 0) return false;
     }
     return true;
+
 }
+app.use(express.static(path.join(__dirname, 'dist')));
+
+console.log(path.join(__dirname, 'dist'))
+
+// Set up a default route to serve index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
