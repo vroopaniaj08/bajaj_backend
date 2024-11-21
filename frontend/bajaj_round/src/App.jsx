@@ -31,7 +31,7 @@ function App() {
         formData.append('file', file);
       }
 
-      const res = await axios.post('http://localhost:7010/bfhl', formData);
+      const res = await axios.post('https://bajaj-backend-eetm.onrender.com/bfhl', formData);
       setResponse(res.data);
       setError('');
       console.log(res.data);
